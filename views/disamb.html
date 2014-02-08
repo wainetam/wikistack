@@ -1,0 +1,20 @@
+<!-- disamb.html for individ pages -->
+
+{% extends "layout.html" %}
+
+{% block title %}WikiStack - Disambiguation Page{% endblock %}
+
+{% block subtitle %}
+  <h3>DISAMBIGUATION for {{docs[0].title}}</h3>
+{% endblock %}
+{% block content %}
+  {% for doc in docs %}
+    <p class="lead"><a href="/wiki/{{doc.id}}/{{doc.url_name}}">{{doc.title}}</a></p>
+    <ul class="list-unstyled">
+      Author: {{doc.name}}
+      <br>
+      {{doc.body|truncate_str}}
+    </ul>
+    <br>
+  {% endfor %}
+{% endblock %}

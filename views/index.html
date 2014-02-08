@@ -1,0 +1,23 @@
+<!-- index.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}WikiStack - Browse{% endblock %}
+
+{% block subtitle %}
+  <h3>BROWSE</h3>
+{% endblock %}
+{% block content %}
+  {% if is_updated %}
+    <div class="alert alert-success">Aww Snap. Page is Updated!</div>
+  {% endif %}
+  {% if docs.length>0 %}
+    <ul class="list-unstyled">
+      {% for doc in docs %}
+        <p class="lead">{{doc|page_link}}</p>
+      {% endfor %}
+    </ul>
+  {% else %}
+    There are no pages. Why don't you <a href='/page/new'>add one</a>?
+  {% endif %}
+{% endblock %}

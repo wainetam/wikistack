@@ -1,0 +1,25 @@
+<!-- disambig.html for entire site -->
+
+{% extends "layout.html" %}
+
+{% block title %}WikiStack - Disambiguation Page{% endblock %}
+
+{% block subtitle %}
+  <h3>DISAMBIGUATION PAGE</h3>
+{% endblock %}
+{% block content %}
+  {% for array in docs %}
+    <p class="lead">{{array[0].title}}</p>
+    {% for item in array %}
+    <ul class="list-unstyled">
+      <li><a href="/wiki/{{item.url_name}}/{{item.id}}">{{item.title}}</a></li>
+      <p class="small">
+        Author: {{item.name}}
+        <br>
+        {{item.body|truncate_str}}
+      </p>
+      </ul>
+    {% endfor %}
+  <br>
+  {% endfor %}
+{% endblock %}

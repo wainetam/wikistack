@@ -1,0 +1,37 @@
+<!-- show.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}Edit Wiki Entry -- {{doc.title}}{% endblock %}
+
+{% block subtitle %}
+  <h3>EDIT {{doc.title}}</h3>
+{% endblock %}
+
+{% block content %}
+
+  {% if cookie_id %}
+    <p class="lead">You are an authorized user!!</class>
+  {% endif %}
+
+<form action="/edit_submit/{{doc.id}}" method="POST" role="form">
+<!-- <form action="/page/edit/{{doc.url_name}}" method="POST" role="form"> -->
+  <div class="form-group">
+    <label for="title_field">Title</label>
+    <input type="text" name="title" class="form-control" id="title_field" value="{{doc.title}}">
+  </div>
+
+  <div class="form-group">
+    <label for="name_field">Name</label>
+    <input type="text" name="name" class="form-control" id="name_field" value="{{doc.name}}">
+  </div>
+
+  <div class="form-group">
+    <label for="text_field">Text</label>
+    <textarea name="body" class="form-control" rows="3" id="body_field">{{doc.body}}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit Edits</button>
+</form>
+
+{% endblock %}

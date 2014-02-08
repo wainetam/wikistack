@@ -1,0 +1,17 @@
+<!-- show.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}Wiki Entry -- {{doc.title}}{% endblock %}
+
+{% block subtitle %}
+  <h3>{{doc.title}}</h3>
+  <h4>by {{doc.name}}</h4>
+{% endblock %}
+
+{% block content %}
+  <p class="lead">{{doc.body|marked}}</p>
+  <hr>
+  <a href="/edit/{{doc.id}}">Edit / </a>
+  <a href="/delete/{{doc.id}}">Delete</a>
+{% endblock %}
