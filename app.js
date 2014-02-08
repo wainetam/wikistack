@@ -65,7 +65,9 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findById(id, function(err, user) {
+  console.log("ID: ", id);
+  models.User.find({_id: id}, function(err, user) {
+    console.log("Found user ", user);
     done(err, user);
   });
 });
@@ -80,10 +82,21 @@ passport.use(new LocalStrategy(
       if (!user.validPassword(password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
+      console.log("Authed user:  ", user);
       return done(null, user);
     });
   }
 ));
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
 
 // development only
 if ('development' == app.get('env')) {
@@ -93,13 +106,13 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 //'routes here is an obj, not the directory; the directory is in require'
-app.get('/page/new', add.form); // page/new
+app.get('/page/new', ensureAuthenticated, add.form); // page/new
 app.get('/wiki/:id/:url_name', routes.show);
 app.get('/wiki/:id', routes.show);
 
 app.get('/edit/:id', edit.show);
 app.post('/page', add.submit); // page
-app.post('/edit_submit/:id', passport.authenticate('local'), edit.submit);
+app.post('/edit_submit/:id', ensureAuthenticated, edit.submit);
 app.get('/users', user.list);
 app.get('/delete/:id', edit.delete);
 app.get('/login', user.login);

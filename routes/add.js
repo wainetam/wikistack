@@ -1,7 +1,7 @@
 var models = require("../models");
 
 exports.form = function(req, res){
-  res.render('add', {user: user});
+  res.render('add', {user: req.user});
 };
 
 exports.submit = function(req, res){
